@@ -1,0 +1,23 @@
+version: '2'
+
+volumes:
+  postgres_data: {}
+  postgres_backup: {}
+  redis_data: {}
+
+services:
+  postgres:
+    restart: always
+    build: ./docker/postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_backup:/backups
+    env_file: 
+      - prod.env
+  redis:
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
